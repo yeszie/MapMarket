@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="{{ data.description }}">
+    <meta name="keywords" content="{{ data.name }}, OSM, mapa, Google Maps, MapMarket">
+    <title>{{ data.name }}</title>
+    <link rel="canonical" href="{{ data.canonical_url }}" />
+    <style>
+        body { 
+            font-family: Arial, sans-serif; 
+            margin: 0; 
+            padding: 0; 
+            color: #333; 
+            background-color: #f4f4f4; 
+        }
+        h1 { 
+            margin: 0; 
+            padding: 20px; 
+            background-color: #007bff; 
+            color: #fff; 
+            text-align: center; 
+        }
+        .banner { 
+            width: 100%; 
+            height: 100px; 
+            background: #ccc; 
+            margin-bottom: 20px; 
+        }
+        .properties { 
+            margin: 20px; 
+            padding: 20px; 
+            background-color: #fff; 
+            border-radius: 8px; 
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1); 
+        }
+        .properties ul { 
+            list-style-type: none; 
+            padding: 0; 
+        }
+        .properties li { 
+            padding: 10px 0; 
+            border-bottom: 1px solid #ddd; 
+        }
+        .properties li:last-child { 
+            border-bottom: none; 
+        }
+        .footer { 
+            margin: 20px; 
+            padding: 20px; 
+            background-color: #fff; 
+            border-radius: 8px; 
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1); 
+            text-align: center; 
+        }
+        #street-view-container, #map-container {
+            width: 100%;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            display: none; /* Ukryj kontenery mapy i Street View na początku */
+        }
+        #street-view-container {
+            height: 600px; /* Ustaw wysokość kontenera według potrzeb */
+            margin: 20px 0;
+        }
+        #map-container {
+            height: 400px; /* Ustaw wysokość kontenera według potrzeb */
+            margin: 20px 0;
+        }
+        .button {
+            display: inline-block;
+            padding: 10px 20px;
+            margin: 10px;
+            color: #fff;
+            background-color: #007bff;
+            border-radius: 5px;
+            text-decoration: none;
+            text-align: center;
+            font-weight: bold;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            transition: background-color 0.3s ease;
+            cursor: pointer;
+        }
+        .button:hover {
+            background-color: #0056b3;
+        }
+        .centered {
+            text-align: center;
+            margin: 20px 0;
+        }
+    </style>
+    <script src="https://maps.googleapis.com/maps/api/js?key=XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX&libraries=places"></script>
+</head>
+<body>
+    <h1>{{ data.name }}</h1>
+
+    <div class="properties">
+        <ul>
+            {% for key, value in data.properties.items() %}
+                {% if key not in ['name'] %}
+                    <li><strong>{{ key|capitalize }}:</strong> {{ value }}</li>
+                {% endif %}
+            {% endfor %}
+            <li><strong>GPS</strong>: {{data.latitude}}, {{data.longitude}}</li>
+        </ul>
+    </div>
+	
+	<div class="map-screenshot centered">
+    {% if data.map_screenshot %}
+        <!-- Jeśli jest miniaturka, używamy jej jako linku -->
+        <a href="https://mapmarket.pl/#18/{{ data.latitude }}/{{ data.longitude }}" target="_self">
+            <img src="{{ data.map_screenshot }}" alt="{{ data.alt_map }}" style="max-width: 100%; height: auto;">
+        </a>
+    {% else %}
+        <!-- Jeśli nie ma miniaturki, zostawiamy przycisk -->
+        <a id="map-link" href="https://mapmarket.pl/#18/{{ data.latitude }}/{{ data.longitude }}" target="_self" class="button">Pokaż na MapMarket</a>
+    {% endif %}
+	</div>
+
+	
+
+    <div class="centered">
+        <a href="{{ data.street_view_url_pano }}" target="_blank" class="button">Street View</a>
+        <a href="{{ data.google_maps_url }}" target="_blank" class="button">Google Maps</a>
+    </div>
+
+    <div class="centered">
+        <span id="toggle-street-view" class="button" onclick="toggleStreetView()">Pokaż Street View</span>
+        <span id="toggle-map" class="button" onclick="toggleMap()">Pokaż Mapę</span>
+    </div>
+
+    <!-- Kontener na Google Street View -->
+    <div id="street-view-container"></div>
+    
+    <!-- Kontener na Google Map -->
+    <div id="map-container"></div>
+
+    <div class="footer">
+        <p><a href="{{ data.index_url }}">Index</a></p>
+    </div>
+
+    <script>
+        var map, streetViewPanorama;
+        var mapMarker, streetViewMarker;
+        var mapInitialized = false;
+        var streetViewInitialized = false;
+
+        function initializeMap() {
+            var location = {lat: {{ data.latitude }}, lng: {{ data.longitude }}};
+            
+            // Inicjalizuj Mapę
+            map = new google.maps.Map(document.getElementById('map-container'), {
+                center: location,
+                zoom: 15
+            });
+
+            // Dodaj marker na mapie
+            mapMarker = new google.maps.Marker({
+                position: location,
+                map: map
+            });
+
+            map.addListener('click', function(event) {
+                var newPosition = event.latLng;
+                streetViewPanorama.setPosition(newPosition);
+                mapMarker.setPosition(newPosition);
+            });
+
+            mapInitialized = true;
+        }
+
+        function initializeStreetView() {
+            var location = {lat: {{ data.latitude }}, lng: {{ data.longitude }}};
+            
+            // Inicjalizuj Street View
+            streetViewPanorama = new google.maps.StreetViewPanorama(
+                document.getElementById('street-view-container'), {
+                    position: location,
+                    pov: {
+                        heading: 34,
+                        pitch: 10
+                    },
+                    zoom: 1,
+                    addressControl: false,
+                    linksControl: false,
+                    panControl: false,
+                    zoomControl: false,
+                    disableDefaultUI: true
+                }
+            );
+
+            // Dodaj marker na Street View
+            streetViewMarker = new google.maps.Marker({
+                position: location,
+                map: streetViewPanorama,
+                title: 'Aktualna lokalizacja'
+            });
+
+            streetViewPanorama.addListener('position_changed', function() {
+                var streetViewPosition = streetViewPanorama.getPosition();
+                map.setCenter(streetViewPosition);
+                mapMarker.setPosition(streetViewPosition);
+            });
+
+            streetViewInitialized = true;
+        }
+
+        function toggleStreetView() {
+            var container = document.getElementById('street-view-container');
+            var button = document.getElementById('toggle-street-view');
+            
+            if (container.style.display === 'none' || container.style.display === '') {
+                if (!streetViewInitialized) {
+                    initializeStreetView();
+                }
+                container.style.display = 'block';
+                button.textContent = 'Ukryj Street View';
+            } else {
+                container.style.display = 'none';
+                button.textContent = 'Pokaż Street View';
+            }
+        }
+
+        function toggleMap() {
+            var container = document.getElementById('map-container');
+            var button = document.getElementById('toggle-map');
+            
+            if (container.style.display === 'none' || container.style.display === '') {
+                if (!mapInitialized) {
+                    initializeMap();
+                    // Synchronizacja pozycji mapy i widoku Street View
+                    if (streetViewInitialized) {
+                        map.setStreetView(streetViewPanorama);
+                    }
+                }
+                container.style.display = 'block';
+                button.textContent = 'Ukryj Mapę';
+            } else {
+                container.style.display = 'none';
+                button.textContent = 'Pokaż Mapę';
+            }
+        }
+    </script>
+</body>
+</html>

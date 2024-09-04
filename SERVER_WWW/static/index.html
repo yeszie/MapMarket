@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="MapMarket.pl - Portal ogłoszeniowy z interaktywną mapą, który ułatwia wyszukiwanie ofert nieruchomości, pracy, usług i produktów. Znajdź najlepsze oferty w swojej okolicy!">
+    <meta name="keywords" content="portal ogłoszeniowy, interaktywna mapa, ogłoszenia, nieruchomości, praca, usługi, produkty, MapMarket.pl">
+    <title>MapMarket.pl - Portal ogłoszeniowy z interaktywną mapą</title>
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <!-- Leaflet MarkerCluster Plugin -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster/dist/MarkerCluster.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster/dist/MarkerCluster.Default.css" />
+    <!-- Własny plik CSS -->
+    <link rel="stylesheet" href="static/styles.css" />
+</head>
+<body>
+
+<div id="map"></div>
+
+<div id="controls">
+	<fieldset>
+    <!-- Checkbox do warstwy ze zdjęciami -->
+    <div class="checkbox">
+        <input type="checkbox" id="photosCheckbox" checked />
+        <label for="photosCheckbox">Zdjęcia</label>
+    </div>
+
+    <div class="checkbox">
+        <input type="checkbox" id="geojsonCheckbox" checked />
+        <label for="geojsonCheckbox">Ogłoszenia nieruchomości</label>
+    </div>
+	
+
+
+	<!--
+    <div class="checkbox">
+        <input type="checkbox" id="kwatery_pracowniczeCheckbox" />
+        <label for="kwatery_pracowniczeCheckbox">Kwatery pracownicze</label>
+    </div>
+
+    <div class="checkbox">
+        <input type="checkbox" id="pracaCheckbox" />
+        <label for="pracaCheckbox">Praca</label>
+		
+    <div class="checkbox">
+        <input type="checkbox" id="automotoCheckbox" />
+        <label for="automotoCheckbox">Ogłoszenia Auto-Moto</label>
+    </div>
+	
+    <div class="checkbox">
+        <input type="checkbox" id="firmsCheckbox" />
+        <label for="firmsCheckbox">Ogłoszenia firm</label>
+    </div>
+
+	-->
+	
+	
+    <div class="checkbox">
+        <input type="checkbox" id="restauracjeCheckbox" />
+        <label for="restauracjeCheckbox"><font color="#f28f3b">Restauracje &nbsp;</font></label>
+		<a href="/amenity_restaurant" target="_blank">amenity restaurant</a>		
+    </div>
+	
+	<div class="checkbox">
+        <input type="checkbox" id="defibrillatorCheckbox" />
+        <label for="defibrillatorCheckbox"><font color="Green">Defibrilator - AED</font></label>
+    </div>
+	
+	<div class="checkbox">
+        <input type="checkbox" id="railway_stationCheckbox" />
+        <label for="railway_stationCheckbox"><font color="blue">PKP &nbsp;</font></label>
+		<a href="/railway_station" target="_blank">Railway - Station</a>
+    </div>
+	
+	<div class="checkbox">
+        <input type="checkbox" id="amenity_hospitalCheckbox" />
+        <label for="amenity_hospitalCheckbox"><font color="red">Szpitale</font></label>
+		
+	</div>
+	<div class="checkbox">
+        <input type="checkbox" id="healthcareCheckbox" />
+        <label for="healtcareCheckbox"><font color="red">Opieka zdrowotna &nbsp;</font></label>
+		<a href="/healthcare" target="_blank">Healthcare</a>
+    </div>	
+	
+	
+	<div class="checkbox">
+        <input type="checkbox" id="shopCheckbox" />
+        <label for="shopCheckbox"><font color="magenta">Sklepy &nbsp;</font></label>
+		<a href="/shop"  target="_blank">Shop</a>
+    </div>
+	
+	<div class="checkbox">
+        <input type="checkbox" id="officeCheckbox" />
+        <label for="officeCheckbox"><font color="magenta">Biura &nbsp;</font></label>
+		<a href="/office" target="_blank">Office</a>
+    </div>
+	<div class="checkbox">
+        <input type="checkbox" id="craftCheckbox" />
+        <label for="craftCheckbox"><font color="magenta">Rzemiosło</font></label>
+    </div>  
+	<div class="checkbox">
+        <input type="checkbox" id="tourismCheckbox" />
+        <label for="tourismCheckbox"><font color="black">Turystyka</font></label>
+    </div> 	
+	
+	</fieldset>
+	
+	<!--<a href="/map" style="color: red;">Multimapa</a>  -->
+    
+	<!--<p>Licytacje komornicze<br>
+    Przetargi nieruchomości<br>
+    Kamery Internetowe</p> -->
+	<br>
+	<a href="/galeria">       Galeria zdjęć </a><br>
+	<a href="/oferty_dzialek">Oferty działek</a><br>
+    <br>
+
+	<fieldset>
+    <!-- Przełącznik warstw mapy -->
+    <div class="radio">
+        <input type="radio" id="mapLayerRadio1" name="mapLayer" checked />
+        <label for="mapLayerRadio1">Mapa</label><br>
+        <input type="radio" id="mapLayerRadio2" name="mapLayer" />
+        <label for="mapLayerRadio2">Satelitarna</label>
+    </div>
+	</fieldset>
+	<br>
+	
+
+    <br><br>
+    <!-- Link do strony internetowej i dane firmy -->
+	<p>Portal ogłoszeniowy, który umożliwia łatwe wyszukiwanie ofert dzięki interaktywnej mapie.</p>
+	<p><a href="/monitoring_ksiag_wieczystych">Monitoring zmian KW</a><p>
+	
+	
+    <p> <br><br>
+     <br></p>
+
+    <div class="company-info">
+        <a href="https://t.me/MapMarket_PL" target="_blank" style="display: flex; align-items: center; text-decoration: none; color: inherit;">
+            <img src="https://banner2.cleanpng.com/20180605/ef/kisspng-telegram-encapsulated-postscript-transfer-5b170605610126.3859681215282355253974.jpg" alt="Telegram Logo" style="width: 30px;"></a>
+    </div>
+    <p> </p>
+</div>
+
+<!-- Leaflet JavaScript -->
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+<!-- Leaflet MarkerCluster Plugin -->
+<script src="https://unpkg.com/leaflet.markercluster/dist/leaflet.markercluster.js"></script>
+<!-- Leaflet Hash Plugin -->
+<script src="https://unpkg.com/leaflet-hash@0.2.1/leaflet-hash.js"></script>
+<!-- Własny plik JavaScript -->
+<script src="static/scripts.js"></script>
+</body>
+</html>

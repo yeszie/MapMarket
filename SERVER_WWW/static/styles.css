@@ -1,0 +1,263 @@
+/* Stylizacja mapy i panelu */
+body, html {
+    height: 100%;
+    margin: 0;
+    overflow: hidden; /* Zapobieganie przewijaniu strony */
+}
+#map {
+    height: 100%;
+    width: 85%; /* Szerokość mapy */
+    float: left; /* Umiejscowienie mapy po lewej stronie */
+}
+#controls {
+    width: 15%; /* Szerokość panelu kontrolnego */
+    height: 100%;
+    float: right; /* Umiejscowienie panelu po prawej stronie */
+    background: #f9f9f9; /* Tło panelu */
+    border-left: 1px solid #ccc; /* Ramka z lewej strony panelu */
+    box-sizing: border-box; /* Włączenie modelu pudełkowego */
+    padding: 10px; /* Wewnętrzne wypełnienie panelu */
+    overflow-y: auto; /* Pionowe przewijanie dla panelu */
+}
+/* Stylizacja kontrolki checkbox */
+.checkbox {
+    margin-bottom: 10px;
+}
+/* Dodatkowy styl dla kontrolki warstw */
+.leaflet-control-layers {
+    margin-top: 10px;
+}
+
+/* Styl dla grupy znaczników z zdjęciami */
+.marker-cluster-photos {
+    background-color: rgba(0, 128, 0, 0.7); /* Zielony kolor grupy */
+    border: 2px solid rgba(0, 128, 0, 0.9); /* Obramowanie grupy */
+}
+
+/* Styl dla grupy znaczników z GeoJSON */
+.marker-cluster-geojson {
+    background-color: rgba(128, 0, 128, 0.7); /* Fioletowy kolor grupy */
+    border: 2px solid rgba(128, 0, 128, 0.9); /* Obramowanie grupy */
+}
+
+/* Styl dla niestandardowej ikony znacznika */
+.custom-icon {
+    width: 48px;  /* Szerokość ikony */
+    height: 48px; /* Wysokość ikony */
+    text-align: center; /* Wyśrodkowanie obrazka */
+    line-height: 48px; /* Wysokość linii równa wysokości ikony */
+}
+
+/* Styl dla zdjęcia wewnątrz niestandardowej ikony */
+.custom-icon .popup-img {
+    max-width: 100%; /* Maksymalna szerokość obrazka */
+    max-height: 100%; /* Maksymalna wysokość obrazka */
+    height: auto; /* Automatyczna wysokość */
+}
+
+/* restauracje - pomarańczowy */
+.marker-cluster-amenity_restaurant div {
+    background-color: #f28f3b;
+    border-radius: 50%;
+    border: 2px solid white;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-weight: bold;
+}
+
+.custom-icon1 {    
+    width: 20px; /* Szerokość ikony */
+    height: 20px; /* Wysokość ikony */
+    border-radius: 50%; /* Zaokrąglenie, aby uzyskać kształt kółka */
+    border: 2px solid #f28f3b;
+    background-color: transparent; 
+    display: inline-block;
+}
+
+
+
+
+/* AED - zielony */
+.marker-cluster-defibrillator div {
+    background-color: green;
+    border-radius: 50%;
+    border: 2px solid white;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-weight: bold;
+}
+
+.custom-icon2 {   /* zielone kółko  -  defibrillator - AED */ 
+    width: 20px; /* Szerokość ikony */
+    height: 20px; /* Wysokość ikony */
+    border-radius: 50%; /* Zaokrąglenie, aby uzyskać kształt kółka */
+    border: 2px solid green; 
+    background-color: transparent; 
+    display: inline-block;
+}
+
+
+
+/* PKP - railway_station */
+.marker-cluster-railway_station div {
+    background-color: blue;
+    border-radius: 50%;
+    border: 2px solid white;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-weight: bold;
+}
+.custom-icon3 {  
+    width: 20px; /* Szerokość ikony */
+    height: 20px; /* Wysokość ikony */
+    border-radius: 50%; /* Zaokrąglenie, aby uzyskać kształt kółka */
+    border: 2px solid blue; 
+    background-color: transparent; 
+    display: inline-block;
+}
+
+
+/* amenity_hospital */
+.marker-cluster-amenity_hospital div {
+    background-color: red;
+    border-radius: 50%;
+    border: 2px solid white;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-weight: bold;
+}
+.custom-icon4 {  
+    width: 20px; /* Szerokość ikony */
+    height: 20px; /* Wysokość ikony */
+    border-radius: 50%; /* Zaokrąglenie, aby uzyskać kształt kółka */
+    border: 2px solid red; 
+    background-color: transparent; 
+    display: inline-block;
+}
+
+
+/* shop */
+.marker-cluster-shop div {
+    background-color: magenta;
+    border-radius: 50%;
+    border: 2px solid white;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-weight: bold;
+}
+.custom-icon5 {  
+    width: 20px; /* Szerokość ikony */
+    height: 20px; /* Wysokość ikony */
+    border-radius: 50%; /* Zaokrąglenie, aby uzyskać kształt kółka */
+    border: 2px solid magenta;
+    background-color: transparent; 
+    display: inline-block;
+}
+
+/* office*/
+.marker-cluster-office div {
+    background-color: magenta;
+    border-radius: 50%;
+    border: 2px solid white;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-weight: bold;
+}
+.custom-icon6 {  
+    width: 20px; /* Szerokość ikony */
+    height: 20px; /* Wysokość ikony */
+    border-radius: 50%; /* Zaokrąglenie, aby uzyskać kształt kółka */
+    border: 2px solid magenta;
+    background-color: transparent; 
+    display: inline-block;
+}
+
+/* craft */
+.marker-cluster-craft div {
+    background-color: magenta;
+    border-radius: 50%;
+    border: 2px solid white;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-weight: bold;
+}
+.custom-icon7 {  
+    width: 20px; /* Szerokość ikony */
+    height: 20px; /* Wysokość ikony */
+    border-radius: 50%; /* Zaokrąglenie, aby uzyskać kształt kółka */
+    border: 2px solid magenta;
+    background-color: transparent; 
+    display: inline-block;
+}
+
+/* construction - plac budowy */
+.marker-cluster-construction div {
+    background-color: black;
+    border-radius: 50%;
+    border: 2px solid white;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-weight: bold;
+}
+.custom-icon8 {  
+    width: 20px; /* Szerokość ikony */
+    height: 20px; /* Wysokość ikony */
+    border-radius: 50%; /* Zaokrąglenie, aby uzyskać kształt kółka */
+    border: 2px solid black;
+    background-color: transparent; 
+    display: inline-block;
+}
+
+/* tourism */
+.marker-cluster-tourism div {
+    background-color: black;
+    border-radius: 30%;
+    border: 2px solid white;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: green;
+    font-weight: bold;
+}
+.custom-icon9 {  
+    width: 20px; /* Szerokość ikony */
+    height: 20px; /* Wysokość ikony */
+    border-radius: 50%; /* Zaokrąglenie, aby uzyskać kształt kółka */
+    border: 2px solid black;
+    background-color: transparent; 
+    display: inline-block;
+}
